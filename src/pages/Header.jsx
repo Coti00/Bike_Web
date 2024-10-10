@@ -1,3 +1,4 @@
+import React,{useState} from 'react';
 import styled from 'styled-components';
 import { MdOutlineLanguage } from "react-icons/md";
 import logo from './img/logo.png';
@@ -31,6 +32,7 @@ const Logo = styled.img`
 `
 
 const Header = () => {
+
     return(
         <HeaderWrapper>
             <Logo src={logo}/>
