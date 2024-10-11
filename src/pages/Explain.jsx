@@ -28,7 +28,7 @@ const ContentWrapper = styled.div`
     margin: 0 25px;
     padding: 0;
     @media screen and (min-width : 768px) {
-        margin: 0 70px;
+        margin: 0 170px;
     }
 `
 
@@ -56,13 +56,13 @@ const MainContainer = styled.div`
 `
 
 const MainTitle = styled.p`
-    font: bold 40px 'arial';
+    font: 400 35px 'arial';
     color: #2b2b2b;
     margin: 0;
     padding: 0;
     margin: 60px 0 30px 0;
     @media screen and (min-width : 768px) {
-        margin: 150px 100px;
+        margin: 150px 0 150px 50px;
     }
 `
 
@@ -71,10 +71,10 @@ const SubContainer = styled.div`
     flex-direction: column;
     @media screen and (min-width : 768px) {
         flex-direction: row;
-        border-top: 1px solid #8e8d8d;
+        border-top: 0.5px solid #8e8d8d;
         & > div:nth-child(2){
-            border-left: 1px solid #8e8d8d;
-            border-right: 1px solid #8e8d8d;
+            border-left: 0.5px solid #8e8d8d;
+            border-right: 0.5px solid #8e8d8d;
         }
     }
 `
@@ -95,23 +95,23 @@ const SubAnimation = styled.div`
 `
 
 const SubTitle = styled.p`
-    font: bold 25px 'arial';
+    font: bold 22px 'arial';
     color: #2b2b2b;
     margin: 40px 0 60px 0;
     padding: 0;
     @media screen and (min-width : 768px) {
-        margin: 40px;
+        margin: 30px 40px 60px 50px;
         padding: 0;
     }
 `
 
 const Content = styled.p`
-    font: 500 15px 'arial';
+    font: 500 13px 'arial';
     margin-bottom: 40px;
     @media screen and (min-width : 768px) {
         margin: 0;
         padding: 0;
-        margin: 40px;
+        margin: 30px 40px 40px 50px;
     }
 `
 
