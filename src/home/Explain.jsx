@@ -47,7 +47,7 @@ const MainAnimdation = styled.div`
 const MainContainer = styled.div`
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid black;
+    border-bottom: 0.5px solid #8e8d8d;
     @media screen and (min-width : 768px) {
         flex-direction: row;
         align-items: center;
@@ -62,7 +62,17 @@ const MainTitle = styled.p`
     padding: 0;
     margin: 60px 0 30px 0;
     @media screen and (min-width : 768px) {
-        margin: 150px 0 150px 50px;
+        margin: 150px 0 150px 20px;
+    }
+`
+
+const MainContent = styled.p`
+    font: 500 13px 'arial';
+    margin-bottom: 40px;
+    @media screen and (min-width : 768px) {
+        margin: 0;
+        padding: 0;
+        margin: 30px 20px 40px 70px;
     }
 `
 
@@ -84,7 +94,7 @@ const SubWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    border-bottom: 1px solid black;
+    border-bottom: 0.5px solid #8e8d8d;
     @media screen and (min-width : 768px) {
         border: none;
     }
@@ -134,7 +144,7 @@ const Explain = () =>{
             <MainContainer>
                 <MainAnimdation delay={0.1} key = {resizeKey + 1}>
                     <MainTitle>스마트한 도시의 스마트한 라이더를 위해.</MainTitle>
-                    <Content>ebii가 도시 이동을 수월하게 해줍니다.<br></br><br></br>주변 세상에서 적극적인 참여자가 되거나 다음 목적지로 향해 보세요. 선택은 여러분의 몫입니다.</Content>
+                    <MainContent>ebii가 도시 이동을 수월하게 해줍니다.<br></br><br></br>주변 세상에서 적극적인 참여자가 되거나 다음 목적지로 향해 보세요. 선택은 여러분의 몫입니다.</MainContent>
                 </MainAnimdation>
             </MainContainer>
             <SubContainer>
