@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { MdOutlineLanguage } from "react-icons/md";
 import logo from "../img/logo.png";
+import Menu from "./Menu";
 
 const HeaderWrapper = styled.div`
   width: 100%;
@@ -34,7 +35,10 @@ const Logo = styled.img`
 const Header = () => {
   return (
     <HeaderWrapper>
-      <Logo src={logo} />
+      <a href="/">
+        <Logo src={logo} />
+      </a>
+      <Menu />
       <HeaderIcon></HeaderIcon>
     </HeaderWrapper>
   );
