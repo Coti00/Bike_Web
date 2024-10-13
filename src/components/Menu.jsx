@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 const MenuWrapper = styled.div`
   flex: 1;
+  max-width: 800px;
+  margin: 0px 10px 0px 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
