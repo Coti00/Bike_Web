@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect, useRef} from "react";
 import styled,{keyframes} from "styled-components";
 
 const slideIn = keyframes`
@@ -33,8 +33,7 @@ const ContentWrapper = styled.div`
 `
 
 const MainAnimdation = styled.div`
-    animation: ${slideDown} 1s ease-out ${({ delay }) => delay}s;
-
+    animation: ${({ inView }) => inView ? slideDown : "none"} 1s ease-out;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -90,6 +89,7 @@ const SubContainer = styled.div`
 `
 
 const SubWrapper = styled.div`
+    animation: ${({ inView }) => inView ? slideIn : "none"} 1s ease-out;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -98,10 +98,6 @@ const SubWrapper = styled.div`
     @media screen and (min-width : 768px) {
         border: none;
     }
-`
-
-const SubAnimation = styled.div`
-    animation: ${slideIn} 1s ease-out ${({ delay }) => delay}s;
 `
 
 const SubTitle = styled.p`
@@ -126,45 +122,51 @@ const Content = styled.p`
 `
 
 const Explain = () =>{
-    const [resizeKey, setResizeKey] = useState(0);
+    const [inView, setInView] = useState({});
+    const refs = useRef([]);
 
-        useEffect(() => {
-            const handleResize = () => {
-                setResizeKey((prevKey) => prevKey + 1);
-            };
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setInView((prev) => ({ ...prev, [entry.target.dataset.index]: true }));
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
 
-            window.addEventListener("resize", handleResize);
-            return () => {
-                window.removeEventListener("resize", handleResize);
-            };
-        }, []);
+        refs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        return () => {
+            if (refs.current) refs.current.forEach((ref) => ref && observer.unobserve(ref));
+        };
+    }, []);
 
     return(
         <ContentWrapper>
             <MainContainer>
-                <MainAnimdation delay={0.1} key = {resizeKey + 1}>
+                <MainAnimdation ref={(el) => refs.current[0] = el} data-index={0} inView={inView[0]}>
                     <MainTitle>스마트한 도시의 스마트한 라이더를 위해.</MainTitle>
                     <MainContent>ebii가 도시 이동을 수월하게 해줍니다.<br></br><br></br>주변 세상에서 적극적인 참여자가 되거나 다음 목적지로 향해 보세요. 선택은 여러분의 몫입니다.</MainContent>
                 </MainAnimdation>
             </MainContainer>
             <SubContainer>
-                <SubWrapper>
-                    <SubAnimation delay={0.3} key={resizeKey + 2}>
-                        <SubTitle>수월한<br></br>라이딩</SubTitle>
-                        <Content>스마트 AI 기능으로 매일 라이딩이 수월해집니다. ebii가 라이더의 스타일과 선호도에 적응하여 라이더에게 최적화도니 여정을 제공합니다!</Content>
-                    </SubAnimation>
+                <SubWrapper ref={(el) => refs.current[1] = el} data-index={1} inView={inView[1]}>
+                    <SubTitle>수월한<br></br>라이딩</SubTitle>
+                    <Content>스마트 AI 기능으로 매일 라이딩이 수월해집니다. ebii가 라이더의 스타일과 선호도에 적응하여 라이더에게 최적화도니 여정을 제공합니다!</Content>
                 </SubWrapper>
-                <SubWrapper>
-                    <SubAnimation delay={0.4} key={resizeKey + 3}>
-                        <SubTitle>매끈한<br></br>디자인</SubTitle>
-                        <Content>단순함과 깔끔한 라인을 특징으로 하는 미니멀리즘 디자인으로 도시의 모든 거리를 스타일리시하게 이동하실 수 있습니다.</Content>
-                    </SubAnimation>
+                <SubWrapper ref={(el) => refs.current[2] = el} data-index={2} inView={inView[2]}>
+                    <SubTitle>매끈한<br></br>디자인</SubTitle>
+                    <Content>단순함과 깔끔한 라인을 특징으로 하는 미니멀리즘 디자인으로 도시의 모든 거리를 스타일리시하게 이동하실 수 있습니다.</Content>
                 </SubWrapper>
-                <SubWrapper>
-                    <SubAnimation delay={0.5} key={resizeKey + 4}> 
-                        <SubTitle>걱정 없는<br></br>안전성</SubTitle>
-                        <Content>지인들과 모이거나, 출근을 좀 늦게 하거나, 아니면 단순히 시간을 보내든, ebii가 라이더를 안전하고 건강하게 모십니다.</Content>
-                    </SubAnimation>
+                <SubWrapper ref={(el) => refs.current[3] = el} data-index={3} inView={inView[3]}>
+                    <SubTitle>걱정 없는<br></br>안전성</SubTitle>
+                    <Content>지인들과 모이거나, 출근을 좀 늦게 하거나, 아니면 단순히 시간을 보내든, ebii가 라이더를 안전하고 건강하게 모십니다.</Content>
                 </SubWrapper>
             </SubContainer>
         </ContentWrapper>
