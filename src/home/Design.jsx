@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect,useRef} from "react";
 import styled,{keyframes} from "styled-components";
 import desgin1 from '../img/Design1.png';
 import desgin2 from '../img/Design2.png';
@@ -35,7 +35,7 @@ const ContentWrapper = styled.div`
 `
 
 const MainAnimdation = styled.div`
-    animation: ${slideDown} 1s ease-out ${({ delay }) => delay}s;
+    animation: ${({inView}) => inView ? slideDown: 'none'} 1s ease-out;
 
     display: flex;
     flex-direction: column;
@@ -93,7 +93,7 @@ const SubContainer = styled.div`
 `
 
 const SubWrapper = styled.div`
-    animation: ${slideUp} 1s ease-out ${({ delay }) => delay}s;
+    animation: ${({inView}) => inView ? slideDown: 'none'} 1s ease-out;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -140,7 +140,7 @@ const SubWrapper2 = styled.div`
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    animation: ${slideUp} 1s ease-out ${({ delay }) => delay}s;
+    animation: ${({inView}) => inView ? slideUp: 'none'} 1s ease-out;
 `
 
 const SubWrapper3 = styled.div`
@@ -162,7 +162,7 @@ const SubWrapper4 = styled.div`
     flex-direction: column;
     justify-content: center;
     flex: 1;
-    animation: ${slideUp} 1s ease-out ${({ delay }) => delay}s;
+    animation: ${({inView}) => inView ? slideUp: 'none'} 1s ease-out;
 `
 const SubContent2 = styled.p`
     font: 500 13px 'arial';
@@ -208,49 +208,62 @@ const LastContent = styled.p`
 `
 
 const Design = () => {
-    const [resizeKey, setResizeKey] = useState(0);
+    const [inView, setInView] = useState({});
+    const refs = useRef([]);
 
-        useEffect(() => {
-            const handleResize = () => {
-                setResizeKey((prevKey) => prevKey + 1);
-            };
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setInView((prev) => ({ ...prev, [entry.target.dataset.index]: true }));
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.5 }
+        );
 
-            window.addEventListener("resize", handleResize);
-            return () => {
-                window.removeEventListener("resize", handleResize);
-            };
-        }, []);
+        refs.current.forEach((ref) => {
+            if (ref) observer.observe(ref);
+        });
+
+        return () => {
+            if (refs.current) refs.current.forEach((ref) => ref && observer.unobserve(ref));
+        };
+    }, []);
+
     return(
         <>
             <ContentWrapper>
                 <MainContainer>
-                    <MainAnimdation delay={0.1} key={resizeKey + 1}>
+                    <MainAnimdation ref={(el) => refs.current[0] = el} data-index={0} inView={inView[0]}>
                         <MainTitle>문자 그대로 고정관념에서 벗어나세요.</MainTitle>
                         <Content>뛰어난 창의력과 혁신적 상상력의 산물인 ebii는 가능성이 무한한, 세계 최고의 모듈식 전기 자전거 아키텍처를 기반으로 제작되었습니다.</Content>
                     </MainAnimdation>
                 </MainContainer>
                 <SubContainer>
-                    <SubWrapper delay={0.1} key={resizeKey + 2}>
+                    <SubWrapper ref={(el) => refs.current[1] = el} data-index={1} inView={inView[1]}>
                         <SubTitle>ebii Box</SubTitle>
                         <SubContent>지능형 차량 제어 상자에는 배터리 팩과 제어 상자를 비롯하여 라이딩을 수월하게 해주는 모든 것이 들어 있습니다.</SubContent>
                         <Img src={desgin1} alt="" />
                     </SubWrapper> 
-                    <SubWrapper style={{borderBottom:'none'}} delay={0.1} key={resizeKey + 3}>
+                    <SubWrapper style={{borderBottom:'none'}} ref={(el) => refs.current[2] = el} data-index={2} inView={inView[2]}>
                         <SubTitle>가벼울수록 좋습니다.</SubTitle>
                         <SubContent>싱글 사이드 포크는 더 가벼울 뿐 아니라 더 원활하고 제어되는 라이딩을 가능하게 합니다.</SubContent>
                         <Img src={desgin2} alt="" />
                     </SubWrapper> 
                 </SubContainer>
                 <SubContainer>
-                    <SubWrapper2 delay={0.1} key={resizeKey + 4}>
+                    <SubWrapper2 ref={(el) => refs.current[3] = el} data-index={3} inView={inView[3]}>
                         <SubContent2>어디든 가야 할 곳으로 데려가도록 설계된 ebii의 경량 폼 팩터가 도시 이동을 식은 죽 먹기로 만듭니다.</SubContent2>
                     </SubWrapper2>
                     <SubWrapper3>
-                        <SubWrapper4 delay={0.1} key={resizeKey + 5}>
+                        <SubWrapper4 ref={(el) => refs.current[4] = el} data-index={4} inView={inView[4]}>
                             <SubTitle>합금 프레임</SubTitle>
                             <SubContent>알루미늄 합금 프레임으로 제작된 ebii는 튼튼하면서 가볍습니다.</SubContent>
                         </SubWrapper4>
-                        <SubWrapper4 delay={0.1} key={resizeKey + 6}>
+                        <SubWrapper4 ref={(el) => refs.current[5] = el} data-index={5} inView={inView[5]}>
                             <SubTitle>싱글 사이드 모터</SubTitle>
                             <SubContent>ebii는 싱글 사이드 허브 모터로 작동되어 콤팩트한 패키지에서 효율이 높습니다.</SubContent>
                         </SubWrapper4>
