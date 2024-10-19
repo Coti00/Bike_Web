@@ -1,5 +1,6 @@
 const News = () => {
-  return <></>;
+  return <>
+  <p>test</p></>;
 };
 
 export default News;
