@@ -4,6 +4,7 @@ import Gallery from "../home/Gallery";
 import Design from "../home/Design";
 import Smarts from "../home/Smarts";
 import Convenience from "../home/Convenience";
+import Safety from "../home/Safety";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       <Design></Design>
       <Smarts></Smarts>
       <Convenience></Convenience>
+      <Safety></Safety>
     </>
   );
 };
