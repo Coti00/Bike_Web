@@ -24,16 +24,16 @@ const slideUp = keyframes`
 
 
 const MainImgWrapper = styled.div`
-  width: 100%;
-  height: 500px;
-  overflow-y: hidden;
-  margin: 30px 0 0 0;
-  padding: 0;
-  position: relative;
-  animation: ${({inView}) => inView ? growShrink : "none"} 1s ease-out;
-  @media screen and (min-width : 768px) {
-    margin-top: 100px;
-    height: 700px;
+    width: 100%;
+    height: 500px;
+    overflow-y: hidden;
+    margin: 30px 0 0 0;
+    padding: 0;
+    position: relative;
+    animation: ${({inView}) => inView ? growShrink : "none"} 1s ease-out;
+    @media screen and (min-width : 768px) {
+        margin-top: 100px;
+        height: 700px;
     }
 `
 
@@ -148,7 +148,7 @@ const SubContent = styled.p`
 
 const SubImg = styled.img`
     width: 100%;
-    height: auto;
+    height: 300px;
     object-fit: cover;
 `
 
